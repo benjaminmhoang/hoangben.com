@@ -1,11 +1,637 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Benjamin Hoang's First Website</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ben Hoang | Technical Support + Systems Thinking</title>
+  <meta
+    name="description"
+    content="Ben Hoang — SaaS support specialist growing into support engineering, integrations, and technical operations."
+  />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #182142;
+      --text: #eef2ff;
+      --muted: #aeb8d6;
+      --line: rgba(255,255,255,0.09);
+      --accent: #7dd3fc;
+      --accent-2: #a78bfa;
+      --max: 1120px;
+      --radius: 18px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(125,211,252,0.12), transparent 30%),
+        radial-gradient(circle at 80% 20%, rgba(167,139,250,0.12), transparent 25%),
+        linear-gradient(180deg, #0a0f1f 0%, #0b1020 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 15, 31, 0.75);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 5.5rem 0 3.5rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid rgba(125,211,252,0.22);
+      background: rgba(125,211,252,0.08);
+      color: #c6f0ff;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 6vw, 4.6rem);
+      line-height: 1.02;
+      margin: 0 0 1rem;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 60ch;
+      margin: 0 0 1.5rem;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 1.4rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.9rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      transition: 0.2s ease;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0a1020;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.07);
+    }
+
+    .hero-card,
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 1.4rem;
+    }
+
+    .hero-stat {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-stat:last-child {
+      border-bottom: none;
+    }
+
+    .hero-stat .label {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .hero-stat .value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-top: 0.2rem;
+    }
+
+    section {
+      padding: 1.2rem 0 2.2rem;
+    }
+
+    .section-head {
+      margin-bottom: 1.1rem;
+    }
+
+    .section-head h2 {
+      margin: 0 0 0.35rem;
+      font-size: 1.75rem;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 65ch;
+    }
+
+    .grid-3,
+    .grid-2 {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+      padding: 1.2rem;
+    }
+
+    .card h3 {
+      margin: 0 0 0.6rem;
+      font-size: 1.08rem;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    ul.clean {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.clean li {
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    ul.clean li:last-child {
+      border-bottom: none;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .timeline-item {
+      padding: 1.2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .timeline-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.55rem;
+    }
+
+    .timeline-top strong {
+      font-size: 1.05rem;
+    }
+
+    .timeline-top span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.8rem;
+    }
+
+    .pill {
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #d9e2ff;
+      font-size: 0.88rem;
+    }
+
+    .quote {
+      font-size: 1.05rem;
+      color: #d9e2ff;
+      margin: 0;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 2rem 0 4rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+
+      .hero {
+        padding-top: 4rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>HEADER</h1>
-  <p>WEEEEEEEEEEEEE</p>
-  <img src="images/Work_headshot.jpeg" alt="Benjamin Hoang Pic" width="300">
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="brand">Ben<span>Hoang</span></a>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#strengths">Strengths</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#now">Now</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">SaaS Support • Debugging • APIs • SQL/Python Growth</div>
+          <h1>
+            I turn messy product problems
+            into clear next steps.
+          </h1>
+          <p>
+            I’m Ben Hoang — a technical support specialist with a product mindset.
+            I spent 4+ years at Axure debugging complex SaaS issues, reproducing edge cases,
+            working across Product, QA, and Engineering, and writing documentation that made support better.
+            Now I’m pushing deeper into support engineering, integrations, automation, and systems-facing work.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#contact">Get in touch</a>
+            <a class="btn btn-secondary" href="#projects">View projects</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <img
+            src="images/Work_headshot.jpeg"
+            alt="Portrait of Ben Hoang"
+            class="headshot"
+          />
+          <div class="hero-stat">
+            <div class="label">Best fit</div>
+            <div class="value">Technical Support Engineer / Solutions-leaning Support</div>
+          </div>
+          <div class="hero-stat">
+            <div class="label">Core tools</div>
+            <div class="value">DevTools, Sentry, APIs, Jira, docs, SQL/Python</div>
+          </div>
+          <div class="hero-stat">
+            <div class="label">What I’m known for</div>
+            <div class="value">Structured troubleshooting, clear handoff, cross-team glue</div>
+          </div>
+          <div class="hero-stat">
+            <div class="label">Based in</div>
+            <div class="value">San Diego area</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <h2>About</h2>
+          <p>
+            My background is unusual on paper, but coherent in practice: support, teaching, troubleshooting,
+            systems thinking, and communicating clearly under chaos. I like technical work that sits at the
+            intersection of users, product behavior, and internal tooling.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>What I do well</h3>
+            <p>
+              I’m strongest when the issue is ambiguous, the customer is frustrated, and the path forward is not obvious.
+              I like isolating variables, validating assumptions, finding the real failure point, and turning noise
+              into a clean escalation, workaround, or fix path.
+            </p>
+          </div>
+          <div class="card">
+            <h3>What I’m building toward</h3>
+            <p>
+              I’m actively leveling up in Python, SQL, APIs, automation, and data workflows so I can move beyond
+              traditional support and into more systems-oriented roles — support engineering, implementation,
+              technical solutions, and internal tooling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="strengths">
+      <div class="container">
+        <div class="section-head">
+          <h2>Strengths</h2>
+          <p>
+            Not buzzwords. These are the patterns that show up consistently in how I work.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Structured troubleshooting</h3>
+            <p>
+              Clarify scope, reproduce, isolate variables, inspect evidence, validate assumptions,
+              document findings, and either resolve or hand off cleanly.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Cross-functional communication</h3>
+            <p>
+              I’m comfortable translating between customer language and technical language without losing the plot.
+              That makes me useful across Support, QA, Product, and Engineering.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Support with product instincts</h3>
+            <p>
+              I don’t just want to close a ticket. I want to understand why the friction exists,
+              whether it repeats, and whether the system or UX should change.
+            </p>
+          </div>
+        </div>
+
+        <div class="pill-row" style="margin-top: 1rem;">
+          <span class="pill">Chrome DevTools</span>
+          <span class="pill">Sentry</span>
+          <span class="pill">REST APIs</span>
+          <span class="pill">JSON</span>
+          <span class="pill">Jira</span>
+          <span class="pill">GitHub</span>
+          <span class="pill">Markdown Docs</span>
+          <span class="pill">Python CLI</span>
+          <span class="pill">SQLite / SQL</span>
+          <span class="pill">Internal Tooling</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <h2>Selected projects</h2>
+          <p>
+            These reflect where I naturally lean: debugging, tooling, API workflows, and practical automation.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Internal Sentry sidebar tool</h3>
+            <p>
+              Built a lightweight JavaScript support tool at Axure that pulled relevant Sentry context
+              into the support workflow, reducing triage time and making issue handling faster and cleaner.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Python API / CLI learning projects</h3>
+            <p>
+              Built small command-line tools using Python, argument parsing, APIs, JSON parsing,
+              CSV/SQLite output, and practical validation logic. The point is not “look, I can code everything.”
+              The point is that I’m building real technical muscle around data and integrations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head">
+          <h2>Experience</h2>
+          <p>
+            The through-line is simpler than it looks: diagnose, explain, guide, improve.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-top">
+              <strong>Product Support Specialist — Axure Software Solutions</strong>
+              <span>2021 – 2025</span>
+            </div>
+            <p class="muted">
+              Supported a global SaaS product by debugging prototype logic issues, browser conflicts,
+              and edge-case workflows. Used Chrome DevTools, logs, Sentry, reproduction testing,
+              Jira escalation, and documentation. Worked closely with Product, QA, and Engineering.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-top">
+              <strong>Private Tutor / Family Assistant / Teaching-heavy roles</strong>
+              <span>Earlier career</span>
+            </div>
+            <p class="muted">
+              A lot of my communication style came from teaching and support-heavy environments:
+              adapting to different personalities, simplifying complex topics, and staying calm
+              when people are overwhelmed or stuck.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-top">
+              <strong>Current focus</strong>
+              <span>Now</span>
+            </div>
+            <p class="muted">
+              Deepening technical range through Python, SQL, APIs, automation, and more systems-facing projects
+              while positioning for stronger support-engineering and technical customer roles.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="now">
+      <div class="container">
+        <div class="section-head">
+          <h2>What I’m focused on now</h2>
+          <p>
+            This is the real-time version of my career direction.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Right now</h3>
+            <ul class="clean">
+              <li>Sharpening SQL and Python through practical CLI/data projects</li>
+              <li>Studying APIs, logs, integrations, and support-engineering workflows</li>
+              <li>Building a stronger portfolio around useful technical artifacts</li>
+              <li>Targeting roles that mix troubleshooting, customer impact, and systems thinking</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Working style</h3>
+            <p class="quote">
+              “I do my best work when there’s ambiguity, real user impact, and a messy system that needs to be understood.”
+            </p>
+            <p class="muted" style="margin-top: 0.9rem;">
+              I care about honest diagnosis, practical momentum, and not pretending something is solved when it isn’t.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contact</h2>
+          <p>
+            Want to talk support engineering, product support, integrations, or technical operations?
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="grid-2">
+            <div>
+              <h3>Reach out</h3>
+              <p class="muted">
+                Email: <a href="mailto:benjamin.hoang760@gmail.com" class="accent">benjamin.hoang760@gmail.com</a><br />
+                LinkedIn: <a href="https://www.linkedin.com/in/benjamin-m-hoang/" target="_blank" rel="noreferrer" class="accent">linkedin.com/in/benjamin-m-hoang</a><br />
+                GitHub: <a href="https://github.com/benjaminhoang760" target="_blank" rel="noreferrer" class="accent">github.com/benjaminhoang760</a>
+              </p>
+            </div>
+
+            <div>
+              <h3>For this site</h3>
+              <p class="muted">
+                This page is intentionally simple: one page, fast load, clear signal.
+                It should feel like a competent product-support person made it — not a template trying too hard.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Built for hoangben.com · Ben Hoang
+    </div>
+  </footer>
 </body>
 </html>
